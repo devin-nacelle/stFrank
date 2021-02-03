@@ -8,43 +8,26 @@
 /****
 -->
 <template>
-  <div class="product">
-    <section class="section">
-      <div class="container">
-        <product-details
-          v-if="product && product.handle"
-          :productHandle="product.handle"
-        />
+  <div>
+    <div class="container">
+      <div class="product columns">
+        <section class="section product-image column is-6 product">
+          <product-detail-section :product="product" :section="sections[0]" />
+        </section>
+        <section class="column is-5 is-offset-1">
+          <product-detail-section :product="product" :section="sections[1]" />
+        </section>
       </div>
-    </section>
+    </div>
     <section class="section product-meta" v-if="product">
       <div class="container">
         <div class="columns">
-          <div class="column is-7">
-            <h4 class="title is-4">What You're Getting</h4>
-            <div class="content">
-              <p>
-                Run a manual sweep of anomalous airborne or electromagnetic
-                readings. Radiation levels in our atmosphere have increased by
-                3,000 percent. Electromagnetic and subspace wave fronts
-                approaching synchronization. What is the strength of the ship's
-                deflector shields at maximum output? The wormhole's size and
-                short period would make this a local phenomenon. Do you have
-                sufficient data to compile a holographic simulation?
-              </p>
-            </div>
-          </div>
-          <div class="column is-4 is-offset-1 highlight">
-            <h4 class="title is-4">Our Products</h4>
-            <div class="content">
-              <p>
-                It indicates a synchronic distortion in the areas emanating
-                triolic waves. The cerebellum, the cerebral cortex, the brain
-                stem, the entire nervous system has been depleted of
-                electrochemical energy.
-              </p>
-            </div>
-          </div>
+          <section class="column is-7">
+            <product-detail-section :product="product" :section="sections[2]" />
+          </section>
+          <section class="column is-4 is-offset-1 highlight">
+            <product-detail-section :product="product" :section="sections[3]" />
+          </section>
         </div>
       </div>
     </section>
@@ -53,22 +36,43 @@
 
 <script>
 import getProduct from '~/mixins/getProduct'
-import ProductDetails from '~/components/nacelle/ProductDetails'
+import ProductDetailSection from '~/components/nacelle/ProductDetailSection'
 import productMetafields from '~/mixins/productMetafields'
 import viewEvent from '~/mixins/viewEvent'
 import jsonld from '~/mixins/jsonld'
 import { mapGetters, mapMutations } from 'vuex'
 
 export default {
-  components: { ProductDetails },
+  components: {
+    ProductDetailSection
+  },
   mixins: [
     getProduct(),
     productMetafields,
     viewEvent('product'),
     jsonld('product')
   ],
+  data() {
+    return {
+      template: null
+    }
+  },
+  async fetch() {
+    this.template = await this.$nacelle.content({
+      handle: 'pdp-template',
+      type: 'productDetailTemplate'
+    })
+  },
   computed: {
-    ...mapGetters('space', ['getMetatag'])
+    ...mapGetters('space', ['getMetatag']),
+
+    sections() {
+      if (this.template && this.template.sections) {
+        return this.template.sections.map(section => section.fields.name)
+      }
+
+      return []
+    }
   },
   methods: {
     ...mapMutations('cart', ['showCart'])
