@@ -1,19 +1,12 @@
 <template>
   <div class="product-grid section nacelle">
     <div class="container">
-      <slot
-        name="header"
-        :title="title"
-      >
+      <slot name="header" :title="title">
         <component :is="titleTag" class="title has-text-centered">
           {{ title }}
         </component>
       </slot>
-      <slot
-        name="products"
-        :products="products"
-        :columns="columns"
-      >
+      <slot name="products" :products="products" :columns="columns">
         <product-grid :products="products" :columns="columns" />
       </slot>
     </div>
@@ -32,9 +25,9 @@ export default {
       type: String,
       default: ''
     },
-    products: {
-      type: Array,
-      default: () => []
+    collectionHandle: {
+      type: String,
+      default: ''
     },
     columns: {
       type: Number,
@@ -44,10 +37,20 @@ export default {
       type: String,
       default: 'h3'
     }
+  },
+  data() {
+    return {
+      products: []
+    }
+  },
+  async fetch() {
+    this.products = await this.$nacelle.data.collectionPage({
+      handle: this.collectionHandle,
+      itemsPerPage: this.columns,
+      paginate: true
+    })
   }
 }
 </script>
 
-<style>
-
-</style>
+<style></style>

@@ -37,14 +37,14 @@ export default {
     buildMode: process.env.BUILD_MODE,
     contentAssetStorage: process.env.CONTENT_ASSET_STORAGE || '',
     NACELLE_PREVIEW_MODE: process.env.NACELLE_PREVIEW_MODE,
-  NACELLE_CMS_PREVIEW_SPACE_ID: process.env.NACELLE_CMS_PREVIEW_SPACE_ID,
-  NACELLE_CMS_PREVIEW_TOKEN: process.env.NACELLE_CMS_PREVIEW_TOKEN
+    NACELLE_CMS_PREVIEW_SPACE_ID: process.env.NACELLE_CMS_PREVIEW_SPACE_ID,
+    NACELLE_CMS_PREVIEW_TOKEN: process.env.NACELLE_CMS_PREVIEW_TOKEN
   },
 
   plugins: [
     { src: '~/plugins/nuxt-client-init.js', ssr: false },
-  '~/plugins/jsonld',
-   '~/plugins/contentful-preview',
+    '~/plugins/jsonld',
+    '~/plugins/contentful-preview'
   ],
 
   modules: [
