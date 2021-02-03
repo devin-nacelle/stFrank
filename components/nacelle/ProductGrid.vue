@@ -7,7 +7,7 @@
       :class="columnClasses"
     >
       <product-card
-        :productHandle="product.handle"
+        :productObject="product"
         :showQuantityUpdate="showQuantityUpdate"
         :showAddToCart="showAddToCart"
         @click.native="onSearchSelected(product.handle)"

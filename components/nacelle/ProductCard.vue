@@ -92,6 +92,10 @@ export default {
       type: String,
       default: ''
     },
+    productObject: {
+      type: Object,
+      default: () => ({})
+    },
     showQuantityUpdate: {
       type: Boolean,
       default: true
@@ -133,7 +137,9 @@ export default {
       'getPriceForCurrency'
     ]),
     product() {
-      return this.getProductData(this.productHandle).product
+      return Object.keys(this.productObject).length
+        ? this.productObject
+        : this.getProductData(this.productHandle).product
     },
     allOptions() {
       return this.getAllOptions(this.productHandle)
