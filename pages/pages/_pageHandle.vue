@@ -87,11 +87,12 @@
 
 <script>
 import getPage from '~/mixins/getPage'
+import getCollection from '~/mixins/getCollection'
 import PageContent from '~/components/nacelle/PageContent'
 
 export default {
   components: { PageContent },
-  mixins: [getPage()],
+  mixins: [getPage(), getCollection()],
   data() {
     return {
       products: []
