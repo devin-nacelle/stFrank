@@ -86,17 +86,17 @@
 </template>
 
 <script>
-import getPage from '~/mixins/getPage'
-import getCollection from '~/mixins/getCollection'
-import PageContent from '~/components/nacelle/PageContent'
+import getPage from "~/mixins/getPage";
+import getCollection from "~/mixins/getCollection";
+import PageContent from "~/components/nacelle/PageContent";
 
 export default {
   components: { PageContent },
-  mixins: [getPage(), getCollection()],
+  mixins: [getCollection(), getPage()],
   data() {
     return {
-      products: []
-    }
-  }
-}
+      products: [],
+    };
+  },
+};
 </script>
